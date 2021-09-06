@@ -5,15 +5,14 @@ import SearchBar from "./SearchBar";
 
 /*
 
-Allow a user to sell a stock in their Portfolio by clicking on the stock and it should be removed from their Portfolio.
-
 Allow a user to sort the list of stocks alphabetically by the ticker name as well as by ascending price.
 
-Allow a user to filter stocks based on the type of the stock.
 */
 
 function MainContainer() {
   const [stocks, setStocks] = useState([])
+  const [sort, setSort] = useState('all')
+  const [filterBy, setFilterBy] = useState('all')
 
   useEffect(() => {
     fetch('http://localhost:3001/stocks')
@@ -39,14 +38,41 @@ function MainContainer() {
     }))
   }
 
+  function handleStockFilter(filter) {
+    setFilterBy(filter)
+  }
+
+  function handleSort(by) {
+    if (by === 'Alphabetically') {
+      setSort('name')
+    } else if (by === 'Price') {
+      setSort('price')
+    }
+  }
+
+  function sortStocks(a, b) {
+    if (sort === 'all') return 0;
+    if (a[sort] > b[sort]) return 1;
+    if (a[sort] < b[sort]) return -1;
+    return 0;
+  }
+  
+  const stockFilter = stocks.filter(stock => {
+    if (filterBy === 'all') {
+      return true;
+    }
+    return stock.type === filterBy;
+  }).sort(sortStocks)
+
   const portfolioStocks = stocks.filter(stock => stock.bought)
+
 
   return (
     <div>
-      <SearchBar />
+      <SearchBar onStockFilter={handleStockFilter} onSort={handleSort}/>
       <div className="row">
         <div className="col-8">
-          <StockContainer stocks={stocks} onStockBuy={handleStockBuy}/>
+          <StockContainer stocks={stockFilter} onStockBuy={handleStockBuy}/>
         </div>
         <div className="col-4">
           <PortfolioContainer stocks={portfolioStocks} onStockSell={handleStockSell}/>

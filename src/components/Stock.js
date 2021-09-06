@@ -1,7 +1,7 @@
 import React from "react";
 
 function Stock({ stock, stockTransaction }) {
-  const {id, ticker, name, type, price} = stock
+  const {id, ticker, name, price} = stock
   
   function handleClickTransaction() {
       stockTransaction(id)
