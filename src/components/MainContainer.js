@@ -5,8 +5,6 @@ import SearchBar from "./SearchBar";
 
 /*
 
-Allow a user to buy a stock by clicking on it and when it is bought, it should be added to MyPortfolio.
-
 Allow a user to sell a stock in their Portfolio by clicking on the stock and it should be removed from their Portfolio.
 
 Allow a user to sort the list of stocks alphabetically by the ticker name as well as by ascending price.
@@ -32,8 +30,17 @@ function MainContainer() {
     }))
   }
 
+  function handleStockSell(id) {
+    setStocks(stocks.map(stock => {
+      if (stock.id === id) {
+        return { ...stock, bought: false }
+      }
+      return stock
+    }))
+  }
+
   const portfolioStocks = stocks.filter(stock => stock.bought)
-  console.log(portfolioStocks)
+
   return (
     <div>
       <SearchBar />
@@ -42,7 +49,7 @@ function MainContainer() {
           <StockContainer stocks={stocks} onStockBuy={handleStockBuy}/>
         </div>
         <div className="col-4">
-          <PortfolioContainer stocks={portfolioStocks}/>
+          <PortfolioContainer stocks={portfolioStocks} onStockSell={handleStockSell}/>
         </div>
       </div>
     </div>
