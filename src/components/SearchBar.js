@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 function SearchBar({ onStockFilter, onSort }) {
   
   function handleSortChange(event) {
     onSort(event.target.value)
   }
-  
+
   return (
     <div>
       <strong>Sort by:</strong>

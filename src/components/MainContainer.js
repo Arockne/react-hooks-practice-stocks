@@ -44,7 +44,7 @@ function MainContainer() {
 
   function handleSort(by) {
     if (by === 'Alphabetically') {
-      setSort('name')
+      setSort('ticker')
     } else if (by === 'Price') {
       setSort('price')
     }
