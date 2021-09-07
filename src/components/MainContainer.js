@@ -3,12 +3,6 @@ import StockContainer from "./StockContainer";
 import PortfolioContainer from "./PortfolioContainer";
 import SearchBar from "./SearchBar";
 
-/*
-
-Allow a user to sort the list of stocks alphabetically by the ticker name as well as by ascending price.
-
-*/
-
 function MainContainer() {
   const [stocks, setStocks] = useState([])
   const [sort, setSort] = useState('all')
